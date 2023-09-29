@@ -17,14 +17,14 @@ Eliza Chat is a server-side driven chatbot application built using Spring Boot. 
 ## How to Run
 
 1. Clone the repo
-    > `git clone [repository-url]`
+    > git clone https://github.com/amejia25/ChatbotServerSideOnly
 2. Switch to directory where you cloned    
-    > `cd [repository-directory]`
+    > cd [repository-directory]
 
 3. Run and build with Gradle:
-    > `gradle bootrun`
+    > gradle bootrun
 4. Open a browser and go to: 
-    >`http://localhost:8080/`.
+    > http://localhost:8080/.
 5. Enter your name to start chatting with Eliza.
 
 ## How to Use
@@ -32,6 +32,14 @@ Eliza Chat is a server-side driven chatbot application built using Spring Boot. 
 1. **Starting the Chat**: Enter your name to initiate the conversation. Eliza will greet you with a randomized greeting.
 2. **Chatting**: Type your message into the input box and press "Send" to chat with Eliza. Eliza's responses are based on keywords in your message.
 3. **Resetting the Chat**: If you wish to restart the conversation, click the "Reset" button.
+
+## Technology Stack
+
+- **Framework**: [Spring Boot](https://spring.io/projects/spring-boot) - An open-source Java-based framework used to create stand-alone, production-grade Spring-based applications.
+- **Template Engine**: [Thymeleaf](https://www.thymeleaf.org/) - A modern server-side Java template engine for web and standalone environments.
+- **Data Format**: [JSON](https://www.json.org/json-en.html) - Lightweight data-interchange format that is easy for humans to read and write.
+- **Build Tool**: [Gradle](https://gradle.org/) - An open-source build automation system that builds upon the concepts of Apache Ant and Apache Maven.
+
 
 ## Implementation Details
 
