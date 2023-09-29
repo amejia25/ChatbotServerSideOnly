@@ -17,14 +17,14 @@ Eliza Chat is a server-side driven chatbot application built using Spring Boot. 
 ## How to Run
 
 1. Clone the repo
-    > git clone https://github.com/amejia25/ChatbotServerSideOnly
+    > `git clone https://github.com/amejia25/ChatbotServerSideOnly`
 2. Switch to directory where you cloned    
-    > cd [repository-directory]
+    > `cd [repository-directory]`
 
 3. Run and build with Gradle:
-    > gradle bootrun
+    > `gradle bootrun`
 4. Open a browser and go to: 
-    > http://localhost:8080/.
+    > `http://localhost:8080/`
 5. Enter your name to start chatting with Eliza.
 
 ## How to Use
