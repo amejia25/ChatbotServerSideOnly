@@ -5,8 +5,18 @@
 </head>
 <body>
     <h1>Eliza Chat</h1>
-    <p th:text="${elizaMessage}"></p>
-    <!-- We'll add more to this template in subsequent steps -->
+
+    <!-- Display the conversation history -->
+    <div id="conversation">
+        <ul>
+            <li th:each="line : ${conversationHistory}" th:text="${line}"></li>
+        </ul>
+    </div>
+
+    <!-- User input form -->
+    <form action="/chat" method="post">
+        <input type="text" name="userMessage" placeholder="Talk to Eliza..." required>
+        <input type="submit" value="Send">
+    </form>
 </body>
 </html>
- 

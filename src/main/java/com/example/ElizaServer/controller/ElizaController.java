@@ -1,4 +1,11 @@
 package com.example.ElizaServer.controller;
+import java.util.List;
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ElizaServer.service.ElizaService;
+import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +18,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import java.util.Random;
 
 @Controller
-@SessionAttributes("name")
+@SessionAttributes({"name", "conversationHistory"})
 public class ElizaController {
+
+    @Autowired
+    private ElizaService elizaService;
 
     private final String[] greetings = {
         "how is your day going?",
@@ -30,14 +40,49 @@ public class ElizaController {
     }
 
     @PostMapping("/setName")
-    public String setName(@RequestParam String name, Model model) {
+    public String setName(@RequestParam String name, Model model,
+                          @ModelAttribute("conversationHistory") List<String> conversationHistory) {
         model.addAttribute("name", name);
-        model.addAttribute("elizaMessage", generateGreeting(name));
+        
+        // Generate a greeting for the user
+        String greeting = generateGreeting(name);
+        
+        // Add the greeting to the conversation history
+        conversationHistory.add("Eliza: " + greeting);
+        
+        model.addAttribute("conversationHistory", conversationHistory);
+        
         return "chat";
     }
+    
 
     private String generateGreeting(String name) {
         int index = new Random().nextInt(greetings.length);
         return name + ", " + greetings[index];
     }
+
+    @ModelAttribute("conversationHistory")
+    public List<String> conversationHistory() {
+        return new ArrayList<>();
+    }
+
+    @PostMapping("/chat")
+    public String chat(@RequestParam String userMessage, Model model, 
+                       @ModelAttribute("name") String name,
+                       @ModelAttribute("conversationHistory") List<String> conversationHistory) {
+        if (name == null || name.isEmpty()) {
+            return "greet";
+        }
+        String elizaResponse = elizaService.getResponse(userMessage);
+        
+        // Add user's message and Eliza's response to the conversation history
+        conversationHistory.add("You: " + userMessage);
+        conversationHistory.add("Eliza: " + elizaResponse);
+        
+        model.addAttribute("conversationHistory", conversationHistory);
+        return "chat";
+    }
+       
+
+
 }
