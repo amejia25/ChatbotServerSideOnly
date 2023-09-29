@@ -5,18 +5,19 @@
 </head>
 <body>
     <h1>Eliza Chat</h1>
-
     <!-- Display the conversation history -->
     <div id="conversation">
         <ul>
             <li th:each="line : ${conversationHistory}" th:text="${line}"></li>
         </ul>
     </div>
-
     <!-- User input form -->
-    <form action="/chat" method="post">
+    <form action="/chat" method="post" style="display: inline;">
         <input type="text" name="userMessage" placeholder="Talk to Eliza..." required>
         <input type="submit" value="Send">
+    </form>
+    <form action="/reset" method="post" style="display: inline;">
+        <input type="submit" value="Reset">
     </form>
 </body>
 </html>

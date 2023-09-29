@@ -55,7 +55,6 @@ public class ElizaController {
         return "chat";
     }
     
-
     private String generateGreeting(String name) {
         int index = new Random().nextInt(greetings.length);
         return name + ", " + greetings[index];
@@ -94,4 +93,11 @@ public class ElizaController {
     public List<Integer> usedQuestions() {
     return new ArrayList<>();
     } 
+
+    @PostMapping("/reset")
+    public String reset(SessionStatus sessionStatus) {
+    sessionStatus.setComplete();
+    return "redirect:/"; 
+}
+
 }
