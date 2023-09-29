@@ -18,7 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import java.util.Random;
 
 @Controller
-@SessionAttributes({"name", "conversationHistory"})
+@SessionAttributes({"name", "conversationHistory", "usedAnswers", "usedQuestions"})
 public class ElizaController {
 
     @Autowired
@@ -69,11 +69,13 @@ public class ElizaController {
     @PostMapping("/chat")
     public String chat(@RequestParam String userMessage, Model model, 
                        @ModelAttribute("name") String name,
-                       @ModelAttribute("conversationHistory") List<String> conversationHistory) {
+                       @ModelAttribute("conversationHistory") List<String> conversationHistory,
+                       @ModelAttribute("usedAnswers") List<Integer> usedAnswers,
+                       @ModelAttribute("usedQuestions") List<Integer> usedQuestions) {
         if (name == null || name.isEmpty()) {
             return "greet";
         }
-        String elizaResponse = elizaService.getResponse(userMessage);
+        String elizaResponse = elizaService.getResponse(userMessage, usedAnswers, usedQuestions);
         
         // Add user's message and Eliza's response to the conversation history
         conversationHistory.add("You: " + userMessage);
@@ -82,7 +84,14 @@ public class ElizaController {
         model.addAttribute("conversationHistory", conversationHistory);
         return "chat";
     }
-       
 
+    @ModelAttribute("usedAnswers")
+    public List<Integer> usedAnswers() {
+    return new ArrayList<>();
+    }
 
+    @ModelAttribute("usedQuestions")
+    public List<Integer> usedQuestions() {
+    return new ArrayList<>();
+    } 
 }

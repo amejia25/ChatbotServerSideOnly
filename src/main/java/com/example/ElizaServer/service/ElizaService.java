@@ -33,7 +33,8 @@ public class ElizaService {
         }
     }
 
-    public String getResponse(String userInput) {
+    public String getResponse(String userInput, List<Integer> usedAnswers, List<Integer> usedQuestions) {
+        Random random = new Random();
         // Shuffle the dictionary entries for random order of keyword checking
         List<DictionaryEntry> shuffledEntries = new ArrayList<>(dictionary.getEntries());
         Collections.shuffle(shuffledEntries);
@@ -45,10 +46,31 @@ public class ElizaService {
             
             for (String key : keys) {
                 if (userInput.toLowerCase().contains(key.toLowerCase())) {
-                    Random random = new Random();
-                    String answer = entry.getAnswer().get(random.nextInt(entry.getAnswer().size()));
-                    String question = entry.getQuestion().get(random.nextInt(entry.getQuestion().size()));
 
+                    int answerIndex;
+                    do {
+                        answerIndex = random.nextInt(entry.getAnswer().size());
+                    } while (usedAnswers.contains(answerIndex));
+                    usedAnswers.add(answerIndex);
+    
+                    // Ensure the question hasn't been used before
+                    int questionIndex;
+                    do {
+                        questionIndex = random.nextInt(entry.getQuestion().size());
+                    } while (usedQuestions.contains(questionIndex));
+                    usedQuestions.add(questionIndex);
+    
+                    String answer = entry.getAnswer().get(answerIndex);
+                    String question = entry.getQuestion().get(questionIndex);
+
+                     // Check if all answers or questions have been used and reset if necessary
+                    if (usedAnswers.size() == entry.getAnswer().size()) {
+                    usedAnswers.clear();
+                    }
+                    if (usedQuestions.size() == entry.getQuestion().size()) {
+                    usedQuestions.clear();
+                    }
+     
                     // Randomize the response format
                     int formatChoice = random.nextInt(3);
                     switch (formatChoice) {
