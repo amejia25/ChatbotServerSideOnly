@@ -15,6 +15,13 @@ import java.util.Random;
 public class ElizaService {
 
     private Dictionary dictionary;
+    
+    // Default responses
+    private final String[] defaultResponses = {
+        "Can you elaborate on that?",
+        "Why do you say that?",
+        "I see. How does that make you feel?"
+    };
 
     public ElizaService() {
         // Load the dictionary from the JSON file
@@ -56,6 +63,10 @@ public class ElizaService {
                 }
             }
         }
-        return "I'm not sure how to respond to that.";
+
+        // If no keyword is matched, return a default response
+        int index = new Random().nextInt(defaultResponses.length);
+        return defaultResponses[index];
     }
 }
+
