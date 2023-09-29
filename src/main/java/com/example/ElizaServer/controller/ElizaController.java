@@ -78,7 +78,7 @@ public class ElizaController {
         String elizaResponse = elizaService.getResponse(userMessage, usedAnswers, usedQuestions);
         
         // Add user's message and Eliza's response to the conversation history
-        conversationHistory.add("You: " + userMessage);
+        conversationHistory.add(name + ": " + userMessage);
         conversationHistory.add("Eliza: " + elizaResponse);
         
         model.addAttribute("conversationHistory", conversationHistory);
